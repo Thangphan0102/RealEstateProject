@@ -1,0 +1,6 @@
+scrapy
+scrapy-redis
+numpy
+pandas
+matplotlib
+python-dotenv
