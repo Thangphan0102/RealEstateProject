@@ -7,6 +7,7 @@ load_dotenv()
 import pandas as pd
 
 from utils import *
+AppPath()
 
 
 def reformat_address(df: pd.DataFrame, len_address: int) -> pd.DataFrame:
@@ -104,33 +105,24 @@ def remove_outliers_from_column(dataframe: pd.DataFrame, column: str, remove_end
 
 
 def main():
-    # Directories
-    ROOT_DIR = os.getenv("ROOT_DIR")
-    DATA_PIPELINE_DIR = Path(ROOT_DIR, "code", "data_pipeline")
-    DATA_SOURCE_DIR = Path(DATA_PIPELINE_DIR, "data_source")
-    DATA_FILE = Path(DATA_SOURCE_DIR, "data.parquet")
-    CLEAN_DATA_FILE = Path(DATA_SOURCE_DIR, "clean_data.parquet")
-    
     # Start
     logger = Log().log
     logger.info("Started cleaning...")
     
     # Load data
     try: 
-        df = pd.read_parquet(DATA_FILE, engine='fastparquet')
+        df = pd.read_parquet(AppPath.DATA_FILE_PATH, engine='fastparquet')
     except FileNotFoundError:
-        logger.error(f"Couldn't find {DATA_FILE} to read!")
+        logger.error(f"Couldn't find {AppPath.DATA_FILE_PATH} to read!")
         return
     else:
-        logger.info(f"Successfully load data from {DATA_FILE}")
+        logger.info(f"Successfully load data from {AppPath.DATA_FILE_PATH}")
     
-    # Clean data
-    # 
+    # Cleaning process
     df = df.dropna()
     df = df.reset_index(drop=True)
     
     # Clean "address" column
-    
     df['address_split'] = df['address'].apply(lambda x: x.split(','))
     df['len_address_split'] = df['address_split'].apply(lambda x: len(x))
     address_df_1 = reformat_address(df, 3)
@@ -205,11 +197,11 @@ def main():
     df = df.drop(columns=['ward', 'usable_area'])
     
     # Save cleaned data
-    df.to_parquet(CLEAN_DATA_FILE, engine='fastparquet')
+    df.to_parquet(AppPath.CLEAN_DATA_FILE_PATH, engine='fastparquet')
     
     # End
-    if Path(CLEAN_DATA_FILE).is_file():
-        logger.info(f"Successfully created {CLEAN_DATA_FILE}")
+    if Path(AppPath.CLEAN_DATA_FILE_PATH).is_file():
+        logger.info(f"Successfully created {AppPath.CLEAN_DATA_FILE_PATH}")
     else:
         logger.error(f"Failed creating the data file!")
         

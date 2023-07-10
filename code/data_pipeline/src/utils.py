@@ -1,6 +1,33 @@
-import logging
+import os
 import sys
+from pathlib import Path
+import logging
 
+from dotenv import load_dotenv
+load_dotenv()
+
+
+class AppConst:
+    INGEST = "ingest"
+    CLEAN = "clean"
+    EXPLORATION = "exploration"
+    
+
+class AppPath:
+    # Directories
+    ROOT_DIR = os.getenv("ROOT_DIR")
+    CODE_DIR = Path(ROOT_DIR, "code")
+    DATA_PIPELINE_DIR = Path(CODE_DIR, "data_pipeline")
+    DATA_DIR = Path(ROOT_DIR, "data")
+    DATA_SOURCE_DIR = Path(DATA_PIPELINE_DIR, "data_source")
+    
+    # Files
+    DATA_FILE_PATH = Path(DATA_SOURCE_DIR, "data.parquet")
+    CLEAN_DATA_FILE_PATH = Path(DATA_SOURCE_DIR, "clean_data.parquet")
+    
+    def __init__(self) -> None:
+        AppPath.DATA_SOURCE_DIR.mkdir(parents=True, exist_ok=True)
+        
 
 class Log:
     log: logging.Logger = None
