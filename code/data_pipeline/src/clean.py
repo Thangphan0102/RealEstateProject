@@ -162,9 +162,6 @@ def main():
     df = pd.concat([df, info_temp_df], axis='columns')
     df = df.drop(columns=['additional_info', 'additional_info_dict'])
     
-    # Set new index
-    df = df.set_index('property_id')
-    
     # Drop duplicates
     df = df.drop_duplicates()
     
