@@ -10,7 +10,7 @@ from utils import *
 
 def main():
     # Start
-    logger = Log().log
+    logger = Log(AppConst.EXPLORATION).log
     logger.info("Started exploring...")
     
     # Read data

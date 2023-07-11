@@ -11,7 +11,7 @@ AppPath()
 
 def main():
     # Start
-    logger = Log().log
+    logger = Log(AppConst.INGEST).log
     logger.info("Started ingesting...")
     
     # Read data
