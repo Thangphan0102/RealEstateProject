@@ -8,6 +8,7 @@ load_dotenv()
 
 
 class AppConst:
+    LOG_LEVEL = logging.DEBUG
     INGEST = "ingest"
     CLEAN = "clean"
     EXPLORATION = "exploration"
@@ -44,5 +45,5 @@ class Log:
         stream_handler = logging.StreamHandler(sys.stdout)
         stream_handler.setFormatter(formatter)
         logger.addHandler(stream_handler)
-        logger.setLevel(logging.INFO)
+        logger.setLevel(AppConst.LOG_LEVEL)
         return logger
