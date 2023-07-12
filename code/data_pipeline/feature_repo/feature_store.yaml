@@ -1,0 +1,10 @@
+project: data_pipeline
+provider: local
+registry: 
+    path: registry/local_registry.db
+online_store:
+    type: sqlite
+    path: registry/online_store.db
+offline_store:
+    type: file
+entity_key_serialization_version: 2
