@@ -4,6 +4,7 @@ from utils import *
 logger = Log(AppConst.DATA_VALIDATION).log
 AppPath()
 
+
 def main():
     # Start
     logger.info("Started: Validating data...")
