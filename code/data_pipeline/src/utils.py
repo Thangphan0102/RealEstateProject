@@ -20,11 +20,12 @@ class AppPath:
     CODE_DIR = Path(ROOT_DIR, "code")
     DATA_PIPELINE_DIR = Path(CODE_DIR, "data_pipeline")
     DATA_DIR = Path(ROOT_DIR, "data")
-    DATA_SOURCE_DIR = Path(DATA_PIPELINE_DIR, "data_source")
+    DATA_SOURCE_DIR = Path(DATA_PIPELINE_DIR, "data_sources")
     
     # Files
     DATA_FILE_PATH = Path(DATA_SOURCE_DIR, "data.parquet")
-    CLEAN_DATA_FILE_PATH = Path(DATA_SOURCE_DIR, "clean_data.parquet")
+    FEATURES_DATA_PATH = Path(DATA_SOURCE_DIR, "features.parquet")
+    ENTITY_DATA_PATH = Path(DATA_SOURCE_DIR, "entity.parquet")
     
     def __init__(self) -> None:
         AppPath.DATA_SOURCE_DIR.mkdir(parents=True, exist_ok=True)

@@ -193,14 +193,21 @@ def main():
     # Drop unnecessary columns
     df = df.drop(columns=['ward', 'usable_area'])
     
-    # Save cleaned data
-    df.to_parquet(AppPath.CLEAN_DATA_FILE_PATH, engine='fastparquet')
+    # Save features
+    features_column = ['title', 'address', 'content', 'street', 'district', 'city', 'num_bedrooms', 'num_bathrooms',
+                       'legal_document', 'date_posted', 'property_id', 'area', 'width', 'length']
+    features_df = df.loc[:, features_column]
+    features_df.to_parquet(AppPath.FEATURES_DATA_PATH, engine='fastparquet')
+    
+    # Save entity dataframe
+    entity_df = df.loc[:, ['property_id', 'date_posted', 'price']]
+    entity_df.to_parquet(AppPath.ENTITY_DATA_PATH, engine='fastparquet')
     
     # End
-    if Path(AppPath.CLEAN_DATA_FILE_PATH).is_file():
-        logger.info(f"Successfully created {AppPath.CLEAN_DATA_FILE_PATH}")
+    if AppPath.FEATURES_DATA_PATH.is_file() and AppPath.ENTITY_DATA_PATH.is_file():
+        logger.info("Finished!")
     else:
-        logger.error(f"Failed creating the data file!")
+        logger.error("Failed to save data files!")
         
         
 if __name__ == "__main__":
