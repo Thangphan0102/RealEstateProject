@@ -11,7 +11,7 @@ from utils import *
 def main():
     # Start
     logger = Log(AppConst.EXPLORATION).log
-    logger.info("Started exploring...")
+    logger.info("Started: Exploring...")
     
     # Read data
     try: 

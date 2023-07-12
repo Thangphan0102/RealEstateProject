@@ -107,7 +107,7 @@ def remove_outliers_from_column(dataframe: pd.DataFrame, column: str, remove_end
 def main():
     # Start
     logger = Log(AppConst.CLEAN).log
-    logger.info("Started cleaning...")
+    logger.info("Started: Cleaning...")
     
     # Load data
     try: 
