@@ -1,6 +1,7 @@
 __pycache__/
 data/
 .idea/
+.DS_Store
 
 # Environment
 .conda
