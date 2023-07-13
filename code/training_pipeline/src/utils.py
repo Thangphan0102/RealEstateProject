@@ -14,6 +14,8 @@ class AppConst:
     DATA_EXTRACTION = "data_extraction"
     DATA_VALIDATION = "data_validation"
     DATA_PREPARATION = "data_preparation"
+    MODEL_TRAINING = "model_training"
+    MLFLOW_MODEL_PATH_PREFIX = "model"
     
 
 class AppPath:
@@ -60,6 +62,9 @@ class Config:
         self.random_seed = 12
         self.test_size= 0.2
         self.target_col = "price"
+        
+        self.mlflow_tracking_uri = os.getenv("MLFLOW_TRACKING_URI")
+        self.experiment_name = "real_estate"
         
 class Log:
     log: logging.Logger = None
