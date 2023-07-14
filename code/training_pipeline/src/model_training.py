@@ -99,6 +99,7 @@ class SklearnTrainer(BaseTrainer):
         super().__init__()
         
         self.model = model
+        self.trained_model = None
         self.params = params
         self.model.set_params(**self.params)
         
@@ -107,14 +108,15 @@ class SklearnTrainer(BaseTrainer):
         train_x, train_y = super().load_data()
         
         # Train model
-        trained_model = super().train(self.model, train_x, train_y)
+        self.trained_model = super().train(self.model, train_x, train_y)
         
         # Evaluate train metrics
-        train_metrics = self.evaluate_train_metrics(trained_model, train_x, train_y)
+        pred_y = self.trained_model.predict(train_x)
+        train_metrics = evaluate_metrics(train_y, pred_y, prefix="train")
         
         # Log metadata
-        signature = infer_signature(train_x, trained_model.predict(train_x))
-        self.log_metadata(trained_model, signature, train_metrics)
+        signature = infer_signature(train_x, self.trained_model.predict(train_x))
+        self.log_metadata(self.trained_model, signature, train_metrics)
 
         # End run
         mlflow.end_run()

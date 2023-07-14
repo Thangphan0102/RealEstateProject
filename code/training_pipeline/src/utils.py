@@ -4,7 +4,10 @@ import logging
 import sys
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -15,6 +18,7 @@ class AppConst:
     DATA_VALIDATION = "data_validation"
     DATA_PREPARATION = "data_preparation"
     MODEL_TRAINING = "model_training"
+    MODEL_EVALUATION = "model_evaluation"
     MLFLOW_MODEL_PATH_PREFIX = "model"
     
 
@@ -155,3 +159,18 @@ def load_json(path) -> dict:
         data = json.load(f)
     
     return data
+
+def evaluate_metrics(actual, predict, prefix="train") -> dict:
+    Log().log.info(f"Stared: evaluate_metrics [{prefix}]")
+    r2 = r2_score(actual, predict)
+    mae = mean_absolute_error(actual, predict)
+    mse = mean_squared_error(actual, predict)
+    rmse = np.sqrt(mse)
+    metrics = {
+        "r2_score": r2,
+        "mae": mae,
+        "mse": mse,
+        "rmse": rmse
+    }
+    metrics = dict(zip([prefix + "_" + key for key in metrics.keys()], metrics.values()))
+    return metrics
