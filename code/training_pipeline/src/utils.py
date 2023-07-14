@@ -91,7 +91,7 @@ class Log:
         return logger
     
 
-class RunInfo():
+class RunInfo:
     def __init__(self, run_id) -> None:
         self.path = AppPath.RUN_INFO
         self.run_id = run_id
