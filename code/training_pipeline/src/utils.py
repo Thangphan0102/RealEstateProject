@@ -32,6 +32,8 @@ class AppPath:
     TRAIN_Y_PQ = Path(ARTIFACTS_DIR, "train_y.parquet")
     TEST_X_PQ = Path(ARTIFACTS_DIR, "test_x.parquet")
     TEST_Y_PQ = Path(ARTIFACTS_DIR, "test_y.parquet")
+
+    RUN_INFO = Path(ARTIFACTS_DIR, "run_info.json")
     
     def __init__(self) -> None:
         AppPath.ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -84,6 +86,25 @@ class Log:
         logger.setLevel(AppConst.LOG_LEVEL)
         return logger
     
+
+class RunInfo():
+    def __init__(self, run_id) -> None:
+        self.path = AppPath.RUN_INFO
+        self.run_id = run_id
+        
+    def save(self):
+        run_info = {
+            "run_id": self.run_id
+        }
+        dump_json(run_info, self.path)
+            
+    @staticmethod
+    def load(path):
+        data = load_json(path)
+        run_info = RunInfo(data["run_id"])
+        
+        return run_info
+    
     
 def inspect_dir(path):
     Log().log.info(f"Started: inspect_dir({path})")
@@ -124,3 +145,13 @@ def train_test_to_parquet(X_train, X_test, y_train, y_test):
     to_parquet(X_test, AppPath.TEST_X_PQ)
     to_parquet(y_train, AppPath.TRAIN_Y_PQ)
     to_parquet(y_test, AppPath.TEST_Y_PQ)
+    
+def dump_json(dict_obj: dict, path):
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(dict_obj, f)
+        
+def load_json(path) -> dict:
+    with open(path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    
+    return data
