@@ -5,7 +5,7 @@ import mlflow
 from mlflow.models.signature import infer_signature
 from mlflow.tracking import MlflowClient
 
-from sklearn.linear_model import ElasticNet
+from sklearn.base import BaseEstimator
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 from utils import *
@@ -95,24 +95,19 @@ class BaseTrainer:
     
 
 class SklearnTrainer(BaseTrainer):
-    def __init__(self) -> None:
+    def __init__(self, model: BaseEstimator, params: dict):
         super().__init__()
+        
+        self.model = model
+        self.params = params
+        self.model.set_params(**self.params)
         
     def train(self):
         # Prepare data
         train_x, train_y = super().load_data()
         
-        # Initialize model
-        model = ElasticNet()
-        params = {
-            "random_state": config.random_seed,
-            "alpha": 0.5,
-            "l1_ratio": 0.1
-        }
-        model.set_params(**params)
-        
         # Train model
-        trained_model = super().train(model, train_x, train_y)
+        trained_model = super().train(self.model, train_x, train_y)
         
         # Evaluate train metrics
         train_metrics = self.evaluate_train_metrics(trained_model, train_x, train_y)
@@ -159,6 +154,13 @@ class LGBMTrainer(BaseTrainer):
         
 
 if __name__ == "__main__":
-    trainer = SklearnTrainer()
+    from sklearn.linear_model import ElasticNet
+    
+    params = {
+        "random_state": config.random_seed,
+        "alpha": 0.5,
+        "l1_ratio": 0.1
+    }
+    trainer = SklearnTrainer(ElasticNet(), params)
     trainer.train()
         
