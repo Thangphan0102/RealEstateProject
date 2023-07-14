@@ -38,6 +38,7 @@ class AppPath:
     TEST_Y_PQ = Path(ARTIFACTS_DIR, "test_y.parquet")
 
     RUN_INFO = Path(ARTIFACTS_DIR, "run_info.json")
+    EVALUATION_RESULT = Path(ARTIFACTS_DIR, "evaluation.json")
     
     def __init__(self) -> None:
         AppPath.ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -109,6 +110,25 @@ class RunInfo:
         
         return run_info
     
+    
+class EvaluationResult:
+    def __init__(self, eval_metrics: dict) -> None:
+        self.path = AppPath.EVALUATION_RESULT
+        self.eval_metrics = eval_metrics
+        
+    def __str__(self) -> str:
+        return str(self.__dict__)
+    
+    def save(self):
+        dump_json(self.eval_metrics, self.path)
+    
+    @staticmethod
+    def load(path):
+        data = load_json(path)
+        eval_result = EvaluationResult(
+            data
+        )
+        return eval_result
     
 def inspect_dir(path):
     Log().log.info(f"Started: inspect_dir({path})")
