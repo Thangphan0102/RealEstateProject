@@ -130,6 +130,25 @@ class EvaluationResult:
         )
         return eval_result
     
+class EvaluationResult:
+    def __init__(self, eval_metrics: dict) -> None:
+        self.path = AppPath.EVALUATION_RESULT
+        self.eval_metrics = eval_metrics
+        
+    def __str__(self) -> str:
+        return str(self.__dict__)
+    
+    def save(self):
+        dump_json(self.eval_metrics, self.path)
+    
+    @staticmethod
+    def load(path):
+        data = load_json(path)
+        eval_result = EvaluationResult(
+            data
+        )
+        return eval_result
+    
     
 def inspect_dir(path):
     Log().log.info(f"Started: inspect_dir({path})")
