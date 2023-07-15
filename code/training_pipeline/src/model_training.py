@@ -2,11 +2,13 @@ import uuid
 import numpy as np
 
 import mlflow
-from mlflow.models.signature import infer_signature
+from mlflow.models.signature import infer_signature, ModelSignature
 from mlflow.tracking import MlflowClient
 
-from sklearn.base import BaseEstimator
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+from sklearn.base import BaseEstimator
+from xgboost import XGBModel
+from lightgbm import LGBMModel
 
 from utils import *
 
@@ -128,19 +130,19 @@ class SklearnTrainer(BaseTrainer):
         # Inspect metadata
         self.fetch_logged_data(run_id)
         
-    def log_metadata(self, model, signature, train_metrics):
-        super().log_metadata(model, train_metrics)
+    def log_metadata(self, signature: ModelSignature, train_metrics: dict) -> None:
+        super().log_metadata(self.trained_model, train_metrics)
         
-        mlflow.log_params(model.get_params(deep=True))
+        mlflow.log_params(self.trained_model.get_params(deep=True))
         mlflow.sklearn.log_model(
-            sk_model=model,
+            sk_model=self.trained_model,
             artifact_path=AppConst.MLFLOW_MODEL_PATH_PREFIX,
             signature=signature
         )
     
 
 class XGBTrainer(BaseTrainer):
-    def __init__(self) -> None:
+    def __init__(self, model: XGBModel, params: dict):
         super().__init__()
     
     def train(self):
@@ -148,7 +150,7 @@ class XGBTrainer(BaseTrainer):
         
         
 class LGBMTrainer(BaseTrainer):
-    def __init__(self) -> None:
+    def __init__(self, model: LGBMModel, params: dict) -> None:
         super().__init__()
 
     def train(self):
