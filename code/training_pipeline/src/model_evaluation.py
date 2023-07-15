@@ -1,4 +1,5 @@
 import mlflow
+from mlflow.client import MlflowClient
 import numpy as np
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
@@ -30,14 +31,18 @@ def main():
     # Load data
     test_x = read_parquet(AppPath.TEST_X_PQ)
     test_x = test_x.drop(columns=['district', 'city', 'legal_document'])
-    test_y = read_parquet(AppPath.TEST_Y_PQ)
     logger.info(f"Loaded test features with shape {test_x.shape}")
-    train_y = read_parquet(AppPath.TRAIN_Y_PQ)
+    test_y = read_parquet(AppPath.TEST_Y_PQ)
     logger.info(f"Loaded test targets with shape {test_y.shape}")
     
     # Evaluation
     pred_y = model.predict(test_x)
     test_metrics = evaluate_metrics(test_y, pred_y, prefix="test")
+    
+    # Log metadata
+    with mlflow.start_run(run_info.run_id):
+        for key, value in test_metrics.items():
+            mlflow.log_metric(key, value)
     
     # Write evaluation result to file
     eval_result = EvaluationResult(test_metrics)
