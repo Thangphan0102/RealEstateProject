@@ -118,7 +118,7 @@ class SklearnTrainer(BaseTrainer):
         
         # Log metadata
         signature = infer_signature(train_x, self.trained_model.predict(train_x))
-        self.log_metadata(self.trained_model, signature, train_metrics)
+        self.log_metadata(signature, train_metrics)
 
         # End run
         mlflow.end_run()
@@ -163,7 +163,7 @@ class XGBTrainer(BaseTrainer):
         
         # Log metadata
         signature = infer_signature(train_x, self.trained_model.predict(train_x))
-        self.log_metadata(self.trained_model, signature, train_metrics)
+        self.log_metadata(signature, train_metrics)
         
         # End run
         mlflow.end_run()
