@@ -231,13 +231,13 @@ class LGBMTrainer(BaseTrainer):
     
 
 if __name__ == "__main__":
-    from lightgbm import LGBMRegressor
+    from xgboost import XGBRegressor
     
     params = {
-        "n_estimators": 2,
-        "max_depth": 2
+
     }
-    model = LGBMRegressor()
+    
+    model = XGBRegressor()
     trainer = LGBMTrainer(model, params)
     trainer.train()
         
