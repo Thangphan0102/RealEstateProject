@@ -80,7 +80,7 @@ class Config:
         self.experiment_name = "real_estate"
 
         self.search_space = {
-            'max_depth': scope.int(hp.quniform('max_depth', 4, 15, 1)),
+            'max_depth': scope.int(hp.quniform('max_depth', 15, 30, 1)),
             'min_child_weight': hp.loguniform('min_child_weight', -1, 7),
             'eta': hp.uniform('eta', 0.1, 0.9),
             'gamma': hp.uniform('gamma', 0, 10),
