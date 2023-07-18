@@ -80,13 +80,12 @@ class Config:
         self.experiment_name = "real_estate"
 
         self.search_space = {
-            'max_depth': scope.int(hp.quniform('max_depth', 1, 5, 1)),
+            'max_depth': scope.int(hp.quniform('max_depth', 3, 10, 1)),
             'min_child_weight': hp.loguniform('min_child_weight', -1, 7),
             'eta': hp.uniform('eta', 0.01, 0.1),
             'gamma': hp.uniform('gamma', 0, 10),
             'subsample': hp.uniform('subsample', 0.1, 1),
-            'random_state': self.random_seed,
-            'objective': "reg:absoluteerror"
+            'random_state': self.random_seed
         }
 
 

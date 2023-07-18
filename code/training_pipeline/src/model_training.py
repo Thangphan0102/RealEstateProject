@@ -24,7 +24,8 @@ logger.info(f"Loaded config: {config.__dict__}")
 
 def load_data():
     train_x = read_parquet(AppPath.TRAIN_X_PQ)
-    train_x = train_x.drop(columns=['district', 'city', 'legal_document'])
+    train_x = train_x.drop(columns=['district'])
+    train_x = pd.get_dummies(train_x, prefix=['city', 'legal_document'])
     logger.info(f"Loaded training features with shape {train_x.shape}")
     train_y = read_parquet(AppPath.TRAIN_Y_PQ)
     logger.info(f"Loaded training targets with shape {train_y.shape}")
