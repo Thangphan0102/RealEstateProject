@@ -200,18 +200,14 @@ class LGBMTrainer(BaseTrainer):
 
 if __name__ == "__main__":
     from xgboost import XGBRegressor
-    from hyperopt.pyll.base import scope
-    from hyperopt import fmin, tpe, hp, Trials
+    from hyperopt import fmin, tpe, Trials
 
     set_up_mlflow()
 
     X_train, y_train = load_data()
 
-    search_space = {
-        'max_depth': scope.int(hp.quniform('max_depth', 4, 15, 1)),
-        'min_child_weight': hp.loguniform('min_child_weight', -1, 7),
-        'random_state': config.random_seed
-    }
+    search_space = config.search_space
+
     trials = Trials()
 
     def objective(search_space):
@@ -226,7 +222,7 @@ if __name__ == "__main__":
             space=search_space,
             algo=tpe.suggest,
             trials=trials,
-            max_evals=5,
+            max_evals=50,
             rstate=np.random.default_rng(config.random_seed)
         )
 

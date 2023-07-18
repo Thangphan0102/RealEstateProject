@@ -8,6 +8,9 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
+from hyperopt import hp
+from hyperopt.pyll.base import scope
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -75,6 +78,15 @@ class Config:
 
         self.mlflow_tracking_uri = os.getenv("MLFLOW_TRACKING_URI")
         self.experiment_name = "real_estate"
+
+        self.search_space = {
+            'max_depth': scope.int(hp.quniform('max_depth', 4, 15, 1)),
+            'min_child_weight': hp.loguniform('min_child_weight', -1, 7),
+            'eta': hp.uniform('eta', 0.1, 0.9),
+            'gamma': hp.uniform('gamma', 0, 10),
+            'subsample': hp.uniform('subsample', 0.1, 1),
+            'random_state': self.random_seed
+        }
 
 
 class Log:
