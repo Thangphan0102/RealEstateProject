@@ -173,7 +173,7 @@ def main():
     df['price'] = price_temp_df['price']
 
     # Take properties with price greater than 01.
-    df = df.loc[df['price'] > 0.1]
+    # df = df.loc[df['price'] > 0.1]
 
     # Remove outliers using IQR
     outliers_dict = {

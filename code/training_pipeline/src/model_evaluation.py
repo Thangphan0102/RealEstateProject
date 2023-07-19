@@ -24,7 +24,6 @@ def main():
     
     # Load data
     test_x = read_parquet(AppPath.TEST_X_PQ)
-    test_x = test_x.drop(columns=['district', 'city', 'legal_document'])
     logger.info(f"Loaded test features with shape {test_x.shape}")
     test_y = read_parquet(AppPath.TEST_Y_PQ)
     logger.info(f"Loaded test targets with shape {test_y.shape}")
