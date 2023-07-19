@@ -25,13 +25,13 @@ def main():
     
     # Store as parquet file
     logger.info("Writing to parquet file...")
-    data.to_parquet(AppPath.DATA_FILE_PATH, engine='fastparquet')
+    to_parquet(data, AppPath.DATA_PQ)
     
     # End
-    if Path(AppPath.DATA_FILE_PATH).is_file():
-        logger.info(f"Successfully created {AppPath.DATA_FILE_PATH}!")
+    if Path(AppPath.DATA_PQ).is_file():
+        logger.info(f"Successfully created {AppPath.DATA_PQ}")
     else:
-        logger.error(f"Failed creating the data file!")
+        logger.error(f"Failed creating the data file")
 
     
 if __name__ == "__main__":

@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
+from feast import FeatureStore
 import pandas as pd
 
 from utils import *
@@ -13,14 +14,29 @@ def main():
     logger = Log(AppConst.EXPLORATION).log
     logger.info("Started: Exploring...")
     
-    # Read data
-    try: 
-        df = pd.read_parquet(AppPath.CLEAN_DATA_FILE_PATH, engine='fastparquet')
-    except FileNotFoundError:
-        logger.error(f"Couldn't find {AppPath.CLEAN_DATA_FILE_PATH} to read!")
-        return
-    else:
-        logger.info(f"Successfully load data from {AppPath.CLEAN_DATA_FILE_PATH}")
+    # Inspect data source directory
+    inspect_dir(AppPath.DATA_SOURCE_DIR)
+
+    # Initialize FeatureStore object
+    fs = FeatureStore(repo_path=AppPath.FEATURE_STORE_REPO)
+
+    # Read entity data
+    entity_df = read_parquet(AppPath.ENTITY_PQ)
+
+    # Retrieve feature data
+    df = fs.get_historical_features(
+        entity_df=entity_df,
+        features=[
+            "properties_fv:area",
+            "properties_fv:width",
+            "properties_fv:length",
+            "properties_fv:num_bedrooms",
+            "properties_fv:num_bathrooms",
+            "properties_fv:district",
+            "properties_fv:city",
+            "properties_fv:legal_document"
+        ]
+    ).to_df()
         
     # Data shape
     logger.info(f"The dataset contains {df.shape[0]} rows and {df.shape[1]} columns")
