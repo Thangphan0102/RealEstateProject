@@ -4,3 +4,6 @@ numpy
 pandas
 matplotlib
 python-dotenv
+apache-airflow
+apache-airflow-providers-docker
+pendulum

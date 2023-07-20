@@ -1,7 +1,8 @@
 __pycache__/
-/code/data_pipeline/data_sources
+code/data_pipeline/data_sources/
 .idea/
 .DS_Store
+run_env/
 
 # Environment
 .conda
