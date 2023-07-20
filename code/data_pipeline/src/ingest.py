@@ -32,6 +32,7 @@ def main():
         logger.info(f"Successfully created {AppPath.DATA_PQ}")
     else:
         logger.error(f"Failed creating the data file")
+    inspect_dir(AppPath.DATA_SOURCE_DIR)
 
     
 if __name__ == "__main__":

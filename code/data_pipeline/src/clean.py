@@ -99,6 +99,7 @@ def main():
     logger.info("Started: Cleaning...")
 
     # Load data
+    inspect_dir(AppPath.DATA_SOURCE_DIR)
     try:
         df = read_parquet(AppPath.DATA_PQ)
     except FileNotFoundError:
@@ -185,6 +186,8 @@ def main():
         logger.info("Finished!")
     else:
         logger.error("Failed to save data files!")
+
+    inspect_dir(AppPath.DATA_SOURCE_DIR)
 
 
 if __name__ == "__main__":
