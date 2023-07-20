@@ -1,11 +1,10 @@
-from pathlib import Path
 import os
-from dotenv import load_dotenv
-load_dotenv()
-
+from pathlib import Path
 import pandas as pd
-
+from dotenv import load_dotenv
 from utils import *
+
+load_dotenv()
 AppPath()
 
 
@@ -13,7 +12,8 @@ def main():
     # Start
     logger = Log(AppConst.INGEST).log
     logger.info("Started: Ingesting...")
-    
+    inspect_dir(AppPath.DATA_SOURCE_DIR)
+
     # Read data
     data = []
     for directory in os.listdir(AppPath.DATA_DIR):

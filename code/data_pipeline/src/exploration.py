@@ -1,12 +1,12 @@
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-load_dotenv()
-
 from feast import FeatureStore
 import pandas as pd
-
 from utils import *
+
+load_dotenv()
+AppPath()
 
 
 def main():

@@ -1,12 +1,11 @@
-from pathlib import Path
 import os
+from pathlib import Path
 import re
-from dotenv import load_dotenv
-load_dotenv()
-
 import pandas as pd
-
+from dotenv import load_dotenv
 from utils import *
+
+load_dotenv()
 AppPath()
 
 
@@ -20,14 +19,12 @@ def reformat_address(df: pd.DataFrame, len_address: int) -> pd.DataFrame:
     else:
         raise ValueError("The len_address value should be either 3 or 4")
 
-    address_df = pd.DataFrame(
-        df.loc[df['len_address_split'] == len_address, 'address_split'].to_list(),
-        columns=columns,
-        index=indexes
-    )
+    address_df = pd.DataFrame(df.loc[df['len_address_split'] == len_address, 'address_split'].to_list(),
+                              columns=columns, index=indexes)
     address_df = address_df.applymap(lambda x: x.strip())
 
     return address_df
+
 
 def split_size(size: str) -> list[int, int]:
     size = size.replace(',', '.')
@@ -46,18 +43,13 @@ def split_size(size: str) -> list[int, int]:
             length = value2
             width = value1
 
-    return width, length
+        return width, length
+
 
 def list_to_dict(words: list) -> dict:
-    columns_dict = {
-        'Diện tích đất': 'area',
-        'Diện tích sử dụng': 'usable_area',
-        'Phòng ngủ': 'num_bedrooms',
-        'Nhà tắm': 'num_bathrooms',
-        'Pháp lý': 'legal_document',
-        'Ngày đăng': 'date_posted',
-        'Mã BĐS': 'property_id'
-    }
+    columns_dict = {'Diện tích đất': 'area', 'Diện tích sử dụng': 'usable_area', 'Phòng ngủ': 'num_bedrooms',
+                    'Nhà tắm': 'num_bathrooms', 'Pháp lý': 'legal_document', 'Ngày đăng': 'date_posted',
+                    'Mã BĐS': 'property_id'}
 
     result_dict = dict()
     for key, value in columns_dict.items():
@@ -67,25 +59,22 @@ def list_to_dict(words: list) -> dict:
             pass
 
     if len(words) % 2 == 1:
-        size = words[words.index('Diện tích đất')+2]
+        size = words[words.index('Diện tích đất') + 2]
         width, length = split_size(size)
         result_dict['width'] = width
         result_dict['length'] = length
 
     return result_dict
 
+
 def word_to_price(words: str):
     words = words.split()
 
     if len(words) == 2:
-        return {
-            words[-1]: float(words[0])
-        }
+        return {words[-1]: float(words[0])}
     else:
-        return {
-            words[1]: float(words[0]),
-            words[3]: float(words[2])
-        }
+        return {words[1]: float(words[0]), words[3]: float(words[2])}
+
 
 def remove_outliers_from_column(dataframe: pd.DataFrame, column: str, remove_end: str = 'both'):
     q1 = dataframe[column].quantile(0.25)
@@ -116,7 +105,7 @@ def main():
         logger.error(f"Couldn't find {AppPath.DATA_PQ} to read!")
         return
     else:
-        logger.info(f"Successfully load data from {AppPath.DATA_PQ}")
+        logger.info(f"Successfully loaded {len(df)} data points from {AppPath.DATA_PQ}")
 
     # Cleaning process
     df = df.dropna()
@@ -133,16 +122,9 @@ def main():
     df['city'] = df['city'].apply(lambda x: 'TPHCM' if x == 'TP.HCM' else x)
 
     # Clean "additional_info" column
-    columns_dict = {
-        'Diện tích đất': 'area',
-        'Diện tích sử dụng': 'usable_area',
-        'Phòng ngủ': 'num_bedrooms',
-        'Nhà tắm': 'num_bathrooms',
-        'Pháp lý': 'legal_document',
-        'Ngày đăng': 'date_posted',
-        'Mã BĐS': 'property_id'
-    }
-
+    columns_dict = {'Diện tích đất': 'area', 'Diện tích sử dụng': 'usable_area', 'Phòng ngủ': 'num_bedrooms',
+                    'Nhà tắm': 'num_bathrooms', 'Pháp lý': 'legal_document', 'Ngày đăng': 'date_posted',
+                    'Mã BĐS': 'property_id'}
     df['additional_info_dict'] = df['additional_info'].apply(list_to_dict)
     info_temp_df = pd.json_normalize(df['additional_info_dict'])
     info_temp_df = info_temp_df.rename(columns=columns_dict)
@@ -168,22 +150,17 @@ def main():
     # Clean "price" column
     price_temp_df = pd.DataFrame.from_records(df['price'].apply(word_to_price), index=df.index)
     price_temp_df = price_temp_df.fillna(0)
-    price_temp_df['price'] = price_temp_df['tỷ'] * 1e9 + price_temp_df['triệu'] * 1e6 + price_temp_df['nghìn'] * 1e3 + price_temp_df['đ']
-    price_temp_df['price'] = price_temp_df['price'] / 1e9       # Price (in billion of VND)
+    price_temp_df['price'] = price_temp_df['tỷ'] * 1e9 + price_temp_df['triệu'] * 1e6 + price_temp_df['nghìn'] * 1e3 + \
+                             price_temp_df['đ']
+    price_temp_df['price'] = price_temp_df['price'] / 1e9  # Price (in billion of VND)
     df['price'] = price_temp_df['price']
 
     # Take properties with price greater than 01.
     # df = df.loc[df['price'] > 0.1]
 
     # Remove outliers using IQR
-    outliers_dict = {
-        'price': 'upper',
-        'area': 'both',
-        'width': 'both',
-        'length': 'both',
-        'num_bedrooms': 'upper',
-        'num_bathrooms': 'upper'
-    }
+    outliers_dict = {'price': 'upper', 'area': 'both', 'width': 'both', 'length': 'both', 'num_bedrooms': 'upper',
+                     'num_bathrooms': 'upper'}
     for column, remove_end in outliers_dict.items():
         df = remove_outliers_from_column(df, column, remove_end)
 
