@@ -5,6 +5,7 @@ cmd=$2      # Command as the second argument
 
 # Service names
 MLFLOW="mlflow"
+AIRFLOW="airflow"
 RESTART_SLEEP_SEC=2
 
 usage() {
@@ -12,6 +13,7 @@ usage() {
     echo "  run.sh <service> <command> [options]"
     echo "Available services:"
     echo "  $MLFLOW"
+    echo "  $AIRFLOW"
     echo "Available commands:"
     echo "  up           run container"
     echo "  down         stop and remove container"
@@ -54,6 +56,19 @@ down_mlflow() {
     down "$MLFLOW" "$@"
 }
 
+# AIRFLOW
+up_airflow() {
+    env_file="$AIRFLOW/.env"
+    if [[ ! -f "$env_file" ]]; then
+        echo -e "AIRFLOW_UID=$(id -u)\nAIRFLOW_GID=0" > "$env_file"
+    fi
+    up "$AIRFLOW" "$@"
+}
+
+down_airflow() {
+    down "$AIRFLOW" "$@"
+}
+
 if [[ "$1" == "-h" ]]; then
     usage
     exit 0
@@ -77,6 +92,9 @@ case $cmd in
             "$MLFLOW")
                 up_mlflow "$@"
                 ;;
+            "$AIRFLOW")
+                up_airflow "$@"
+                ;;
             *)
                 echo "Unknown service"
                 usage
@@ -88,6 +106,9 @@ case $cmd in
         case $service in
             "$MLFLOW")
                 down_mlflow "$@"
+                ;;
+            "$AIRFLOW")
+                down_airflow "$@"
                 ;;
             *)
                 echo "Unknown service"
@@ -102,6 +123,11 @@ case $cmd in
                 down_mlflow "$@"
                 sleep $RESTART_SLEEP_SEC
                 up_mlflow "$@"
+                ;;
+            "$AIRFLOW")
+                down_airflow "$@"
+                sleep $RESTART_SLEEP_SEC
+                up_airflow "$@"
                 ;;
             *)
                 echo "Unknown service"
