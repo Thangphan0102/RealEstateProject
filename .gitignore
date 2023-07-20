@@ -1,5 +1,5 @@
 __pycache__/
-data/
+/code/data_pipeline/data_sources
 .idea/
 .DS_Store
 
