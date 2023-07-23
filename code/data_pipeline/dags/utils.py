@@ -12,8 +12,12 @@ class AppConst:
 
 
 class AppPath:
-    DATA_PIPELINE_DIR = Path(Variable.get("DATA_PIPELINE_DIR"))
+    ROOT_DIR = Path(Variable.get("ROOT_DIR"))
+    DATA_DIR = Path(ROOT_DIR, "data")
+    CODE_DIR = Path(ROOT_DIR, "code")
+    DATA_PIPELINE_DIR = Path(CODE_DIR, "data_pipeline")
     FEATURE_REPO = Path(DATA_PIPELINE_DIR, "feature_repo")
+    DATA_SOURCE_DIR = Path(DATA_PIPELINE_DIR, "data_sources")
 
 
 class DefaultConfig:
@@ -34,5 +38,18 @@ class DefaultConfig:
                 target="/data_pipeline/feature_repo",
                 type="bind",
             ),
-        ]
+            # Data
+            Mount(
+                source=AppPath.DATA_DIR.absolute().as_posix(),
+                target="/data",
+                type="bind"
+            ),
+            # Data source
+            Mount(
+                source=AppPath.DATA_SOURCE_DIR.absolute().as_posix(),
+                target="/data_pipeline/data_sources",
+                type="bind"
+            )
+        ],
+        "mount_tmp_dir": False
     }

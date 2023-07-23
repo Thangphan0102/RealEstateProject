@@ -21,19 +21,19 @@ with DAG(
     ingest_task = DockerOperator(
         task_id="ingest_task",
         **DefaultConfig.DEFAULT_DOCKER_OPERATORS_ARGS,
-        command="/bin/bash -c 'cd src/ && python ingest.py",
+        command="/bin/bash -c 'cd src/ && python ingest.py'",
     )
 
     clean_task = DockerOperator(
         task_id="clean_task",
         **DefaultConfig.DEFAULT_DOCKER_OPERATORS_ARGS,
-        command="/bin/bash -c 'cd src/ && python clean.py",
+        command="/bin/bash -c 'cd src/ && python clean.py'",
     )
 
     explore_task = DockerOperator(
         task_id="explore_task",
         **DefaultConfig.DEFAULT_DOCKER_OPERATORS_ARGS,
-        command="/bin/bash -c 'cd src/ && python exploration.py",
+        command="/bin/bash -c 'cd src/ && python exploration.py'",
     )
 
     ingest_task >> clean_task >> explore_task
