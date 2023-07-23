@@ -19,8 +19,9 @@ class AppConst:
 class AppPath:
     # Directories
     DATA_PIPELINE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    ROOT_DIR = os.path.dirname(os.path.dirname(DATA_PIPELINE_DIR))
     DATA_SOURCE_DIR = Path(DATA_PIPELINE_DIR, "data_sources")
-    DATA_DIR = Path(DATA_SOURCE_DIR, "data")
+    DATA_DIR = Path(ROOT_DIR, "data")
     FEATURE_STORE_REPO = Path(DATA_PIPELINE_DIR, "feature_repo")
     
     # Files

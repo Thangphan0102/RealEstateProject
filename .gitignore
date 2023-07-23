@@ -3,6 +3,7 @@ code/data_pipeline/data_sources/
 .idea/
 .DS_Store
 run_env/
+data/
 
 # Environment
 .conda
