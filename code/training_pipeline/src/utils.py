@@ -36,6 +36,7 @@ class AppPath:
     FEATURE_STORE_REPO = Path(DATA_PIPELINE_DIR, "feature_repo")
     ARTIFACTS_DIR = Path(TRAINING_PIPELINE_DIR, "artifacts")
 
+    ENTITY_PQ = Path(DATA_SOURCE_DIR, "entity.parquet")
     TRAINING_PQ = Path(ARTIFACTS_DIR, "train_data.parquet")
     TRAIN_X_PQ = Path(ARTIFACTS_DIR, "train_x.parquet")
     TRAIN_Y_PQ = Path(ARTIFACTS_DIR, "train_y.parquet")

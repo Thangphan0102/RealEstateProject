@@ -17,7 +17,7 @@ def main():
     fs = FeatureStore(repo_path=AppPath.FEATURE_STORE_REPO)
     
     # Read entity data
-    entity_df = read_parquet(Path(AppPath.DATA_SOURCE_DIR, "entity.parquet"))
+    entity_df = read_parquet(AppPath.ENTITY_PQ)
     
     # Retrieve feature data
     training_df = fs.get_historical_features(
