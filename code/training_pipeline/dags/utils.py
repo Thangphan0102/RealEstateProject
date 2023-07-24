@@ -39,13 +39,19 @@ class DefaultConfig:
             # Feature repo
             Mount(
                 source=AppPath.FEATURE_REPO.absolute().as_posix(),
-                target="/data_pipeline/feature_repo",
+                target="/real_estate/feature_repo",
                 type="bind",
             ),
             # Data source
             Mount(
                 source=AppPath.DATA_SOURCE_DIR.absolute().as_posix(),
-                target="/data_pipeline/data_sources",
+                target="/real_estate/data_sources",
+                type="bind"
+            ),
+            # Artifacts
+            Mount(
+                source=AppPath.ARTIFACTS_DIR.absolute().as_posix(),
+                target="/real_estate/code/training_pipeline/artifacts",
                 type="bind"
             )
         ],

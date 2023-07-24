@@ -21,7 +21,7 @@ with DAG(
     data_extraction_task = DockerOperator(
         task_id="data_extraction_task",
         **DefaultConfig.DEFAULT_DOCKER_OPERATORS_ARGS,
-        command="/bin/bash -c 'cd src/ && python data_extraction.py'"
+        command="/bin/bash -c 'cd .. && python training_pipeline/src/data_extraction.py'"
     )
     
     data_validation_task = DockerOperator(
