@@ -1,4 +1,5 @@
 .dockerignore
+.gitignore
 __pycache__
 artifacts
 nbs

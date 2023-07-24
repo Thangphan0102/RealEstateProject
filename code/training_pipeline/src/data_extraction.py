@@ -13,7 +13,7 @@ def main():
     # Inspect data source directory
     inspect_dir(AppPath.DATA_SOURCE_DIR)
     
-    # Initalize FeatureStore object
+    # Initialize FeatureStore object
     fs = FeatureStore(repo_path=AppPath.FEATURE_STORE_REPO)
     
     # Read entity data

@@ -11,7 +11,7 @@ from hyperopt import STATUS_OK
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.base import BaseEstimator
 from xgboost import XGBModel
-from lightgbm import LGBMModel
+# from lightgbm import LGBMModel
 
 from utils import *
 
@@ -152,49 +152,49 @@ class XGBTrainer(BaseTrainer):
         )
 
 
-class LGBMTrainer(BaseTrainer):
-    def __init__(self, model: LGBMModel, params: TypedDict) -> None:
-        super().__init__(model, params)
-
-        self.model = model
-        self.trained_model = None
-        self.params = params
-        self.model.set_params(**self.params)
-
-    def train(self, **kwargs):
-        # Prepare data
-        train_x, train_y = super().load_data()
-
-        # Train model
-        self.trained_model = super().train(train_x, train_y)
-
-        # Evaluate train metrics
-        pred_y = self.trained_model.predict(train_x)
-        train_metrics = evaluate_metrics(train_y, pred_y, prefix="train")
-
-        # Log metadata
-        signature = infer_signature(train_x, self.trained_model.predict(train_x))
-        self.log_metadata(signature, train_metrics)
-
-        # End run
-        mlflow.end_run()
-
-        # Save run_id to json
-        run_id = mlflow.last_active_run().info.run_id
-        self.save_run_id(run_id)
-
-        # Inspect metadata
-        fetch_logged_data(run_id)
-
-    def log_metadata(self, signature: ModelSignature, train_metrics: dict) -> None:
-        super().log_metadata(self.trained_model, train_metrics)
-
-        mlflow.log_params(self.trained_model.get_params(deep=True))
-        mlflow.lightgbm.log_model(
-            lgb_model=self.trained_model,
-            artifact_path=AppConst.MLFLOW_MODEL_PATH_PREFIX,
-            signature=signature
-        )
+# class LGBMTrainer(BaseTrainer):
+#     def __init__(self, model: LGBMModel, params: TypedDict) -> None:
+#         super().__init__(model, params)
+#
+#         self.model = model
+#         self.trained_model = None
+#         self.params = params
+#         self.model.set_params(**self.params)
+#
+#     def train(self, **kwargs):
+#         # Prepare data
+#         train_x, train_y = super().load_data()
+#
+#         # Train model
+#         self.trained_model = super().train(train_x, train_y)
+#
+#         # Evaluate train metrics
+#         pred_y = self.trained_model.predict(train_x)
+#         train_metrics = evaluate_metrics(train_y, pred_y, prefix="train")
+#
+#         # Log metadata
+#         signature = infer_signature(train_x, self.trained_model.predict(train_x))
+#         self.log_metadata(signature, train_metrics)
+#
+#         # End run
+#         mlflow.end_run()
+#
+#         # Save run_id to json
+#         run_id = mlflow.last_active_run().info.run_id
+#         self.save_run_id(run_id)
+#
+#         # Inspect metadata
+#         fetch_logged_data(run_id)
+#
+#     def log_metadata(self, signature: ModelSignature, train_metrics: dict) -> None:
+#         super().log_metadata(self.trained_model, train_metrics)
+#
+#         mlflow.log_params(self.trained_model.get_params(deep=True))
+#         mlflow.lightgbm.log_model(
+#             lgb_model=self.trained_model,
+#             artifact_path=AppConst.MLFLOW_MODEL_PATH_PREFIX,
+#             signature=signature
+#         )
 
 
 if __name__ == "__main__":
