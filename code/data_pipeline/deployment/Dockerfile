@@ -7,5 +7,5 @@ ENV PATH="/opt/venv/bin:$PATH"
 COPY deployment/requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY . /data_pipeline
-WORKDIR /data_pipeline
+COPY . /real_estate/code/data_pipeline
+WORKDIR /real_estate/code/data_pipeline

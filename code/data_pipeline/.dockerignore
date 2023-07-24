@@ -1,7 +1,4 @@
 .dockerignore
-.gitignore
 .DS_Store
 /__pycache__
 /dags
-/feature_repo
-/data_sources
