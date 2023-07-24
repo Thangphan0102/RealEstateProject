@@ -11,5 +11,6 @@ FROM python:3.9-slim
 
 COPY --from=build /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
+
 COPY . /real_estate/code/training_pipeline
 WORKDIR /real_estate/code/training_pipeline
