@@ -16,10 +16,11 @@ class AppPath:
     CODE_DIR = Path(ROOT_DIR, "code")
     
     DATA_PIPELINE_DIR = Path(CODE_DIR, "data_pipeline")
-    FEATURE_REPO = Path(DATA_PIPELINE_DIR, "feature_repo")
-    DATA_SOURCE_DIR = Path(DATA_PIPELINE_DIR, "data_sources")
-    
     TRAINING_PIPELINE_DIR = Path(CODE_DIR, "training_pipeline")
+
+    FEATURE_REPO = Path(ROOT_DIR, "feature_repo")
+    DATA_SOURCE_DIR = Path(ROOT_DIR, "data_sources")
+
     ARTIFACTS_DIR = Path(TRAINING_PIPELINE_DIR, "artifacts")
     
 

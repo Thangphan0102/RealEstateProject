@@ -31,18 +31,17 @@ class AppPath:
     CODE_DIR = os.path.dirname(TRAINING_PIPELINE_DIR)
     ROOT_DIR = os.path.dirname(CODE_DIR)
     DATA_PIPELINE_DIR = Path(CODE_DIR, "data_pipeline")
-    TRAINING_PIPELINE_DIR = Path(CODE_DIR, "training_pipeline")
-    DATA_SOURCE_DIR = Path(DATA_PIPELINE_DIR, "data_sources")
-    FEATURE_STORE_REPO = Path(DATA_PIPELINE_DIR, "feature_repo")
-    ARTIFACTS_DIR = Path(TRAINING_PIPELINE_DIR, "artifacts")
 
+    DATA_SOURCE_DIR = Path(ROOT_DIR, "data_sources")
+    FEATURE_STORE_REPO = Path(ROOT_DIR, "feature_repo")
     ENTITY_PQ = Path(DATA_SOURCE_DIR, "entity.parquet")
+
+    ARTIFACTS_DIR = Path(TRAINING_PIPELINE_DIR, "artifacts")
     TRAINING_PQ = Path(ARTIFACTS_DIR, "train_data.parquet")
     TRAIN_X_PQ = Path(ARTIFACTS_DIR, "train_x.parquet")
     TRAIN_Y_PQ = Path(ARTIFACTS_DIR, "train_y.parquet")
     TEST_X_PQ = Path(ARTIFACTS_DIR, "test_x.parquet")
     TEST_Y_PQ = Path(ARTIFACTS_DIR, "test_y.parquet")
-
     RUN_INFO = Path(ARTIFACTS_DIR, "run_info.json")
     EVALUATION_RESULT = Path(ARTIFACTS_DIR, "evaluation.json")
 

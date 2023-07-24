@@ -13,11 +13,13 @@ class AppConst:
 
 class AppPath:
     ROOT_DIR = Path(Variable.get("ROOT_DIR"))
-    DATA_DIR = Path(ROOT_DIR, "data")
     CODE_DIR = Path(ROOT_DIR, "code")
+
     DATA_PIPELINE_DIR = Path(CODE_DIR, "data_pipeline")
-    FEATURE_REPO = Path(DATA_PIPELINE_DIR, "feature_repo")
-    DATA_SOURCE_DIR = Path(DATA_PIPELINE_DIR, "data_sources")
+
+    FEATURE_REPO = Path(ROOT_DIR, "feature_repo")
+    DATA_SOURCE_DIR = Path(ROOT_DIR, "data_sources")
+    DATA_DIR = Path(DATA_SOURCE_DIR, "data")
 
 
 class DefaultConfig:
