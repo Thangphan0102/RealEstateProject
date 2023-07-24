@@ -27,13 +27,14 @@ class AppConst:
 
 
 class AppPath:
-    ROOT_DIR = os.getenv("ROOT_DIR")
-    CODE_DIR = Path(ROOT_DIR, "code")
+    TRAINING_PIPELINE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    CODE_DIR = os.path.dirname(TRAINING_PIPELINE_DIR)
+    ROOT_DIR = os.path.dirname(CODE_DIR)
     DATA_PIPELINE_DIR = Path(CODE_DIR, "data_pipeline")
     TRAINING_PIPELINE_DIR = Path(CODE_DIR, "training_pipeline")
     DATA_SOURCE_DIR = Path(DATA_PIPELINE_DIR, "data_sources")
-    ARTIFACTS_DIR = Path(TRAINING_PIPELINE_DIR, "artifacts")
     FEATURE_STORE_REPO = Path(DATA_PIPELINE_DIR, "feature_repo")
+    ARTIFACTS_DIR = Path(TRAINING_PIPELINE_DIR, "artifacts")
 
     TRAINING_PQ = Path(ARTIFACTS_DIR, "train_data.parquet")
     TRAIN_X_PQ = Path(ARTIFACTS_DIR, "train_x.parquet")
