@@ -1,0 +1,12 @@
+apache-airflow==2.6.3
+apache-airflow-providers-docker==3.7.1
+python-dotenv==1.0.0
+numpy==1.25.0
+pandas==1.5.3
+fastparquet==2023.7.0
+pendulum==2.1.2
+feast==0.31.1
+mlflow==2.4.2
+scikit-learn==1.2.2
+xgboost==1.7.6
+hyperopt==0.2.7
