@@ -1,10 +1,8 @@
 import os
 from pathlib import Path
 import pandas as pd
-from dotenv import load_dotenv
 from utils import *
 
-load_dotenv()
 AppPath()
 
 

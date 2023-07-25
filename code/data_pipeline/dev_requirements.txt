@@ -1,0 +1,6 @@
+apache-airflow==2.6.3
+apache-airflow-providers-docker==3.7.1
+numpy==1.25.0
+pandas==1.5.3
+fastparquet==2023.7.0
+pendulum==2.1.2

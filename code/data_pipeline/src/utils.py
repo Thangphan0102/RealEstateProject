@@ -2,11 +2,7 @@ import os
 import sys
 from pathlib import Path
 import logging
-
 import pandas as pd
-
-from dotenv import load_dotenv
-load_dotenv()
 
 
 class AppConst:
