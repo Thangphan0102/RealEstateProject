@@ -210,3 +210,14 @@ def evaluate_metrics(actual, predict, prefix="train") -> dict:
     metrics = {"r2_score": r2, "mae": mae, "mse": mse, "rmse": rmse}
     metrics = dict(zip([prefix + "_" + key for key in metrics.keys()], metrics.values()))
     return metrics
+
+
+def load_data():
+    train_x = read_parquet(AppPath.TRAIN_X_PQ)
+    Log().log.info(f"Loaded training features with shape {train_x.shape}")
+    train_y = read_parquet(AppPath.TRAIN_Y_PQ)
+    Log().log.info(f"Loaded training targets with shape {train_y.shape}")
+
+    assert len(train_x.shape) == len(train_y.shape), "Lengths of train_x and train_y should be equal"
+
+    return train_x, train_y

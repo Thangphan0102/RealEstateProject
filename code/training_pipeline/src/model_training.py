@@ -22,17 +22,6 @@ config = Config()
 logger.info(f"Loaded config: {config.__dict__}")
 
 
-def load_data():
-    train_x = read_parquet(AppPath.TRAIN_X_PQ)
-    logger.info(f"Loaded training features with shape {train_x.shape}")
-    train_y = read_parquet(AppPath.TRAIN_Y_PQ)
-    logger.info(f"Loaded training targets with shape {train_y.shape}")
-
-    assert len(train_x.shape) == len(train_y.shape), "Lengths of train_x and train_y should be equal"
-
-    return train_x, train_y
-
-
 def set_up_mlflow():
     mlflow.set_tracking_uri(config.mlflow_tracking_uri)
     experiment = mlflow.set_experiment(config.experiment_name)
