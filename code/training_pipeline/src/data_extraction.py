@@ -2,12 +2,12 @@ from feast import FeatureStore
 
 from utils import *
 
+logger = Log(AppConst.DATA_EXTRACTION).log
 AppPath()
 
 
 def main():
     # Start
-    logger = Log(AppConst.DATA_EXTRACTION).log
     logger.info("Started: Extracting data...")
     
     # Inspect data source directory
