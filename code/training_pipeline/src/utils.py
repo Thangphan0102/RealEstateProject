@@ -23,6 +23,7 @@ class AppConst:
     DATA_PREPARATION = "data_preparation"
     MODEL_TRAINING = "model_training"
     MODEL_EVALUATION = "model_evaluation"
+    MODEL_VALIDATION = "model_validation"
     MLFLOW_MODEL_PATH_PREFIX = "model"
 
 
@@ -44,6 +45,7 @@ class AppPath:
     TEST_Y_PQ = Path(ARTIFACTS_DIR, "test_y.parquet")
     RUN_INFO = Path(ARTIFACTS_DIR, "run_info.json")
     EVALUATION_RESULT = Path(ARTIFACTS_DIR, "evaluation.json")
+    REGISTERED_MODEL_VERSION = Path(ARTIFACTS_DIR, "registered_model_version.json")
 
     def __init__(self) -> None:
         AppPath.ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -88,6 +90,9 @@ class Config:
             'subsample': hp.uniform('subsample', 0.1, 1),
             'random_state': self.random_seed
         }
+        
+        self.test_mae_threshold = float(os.getenv("TEST_MAE_THRESHOLD"))
+        self.registered_model_name = os.environ.get("REGISTERED_MODEL_NAME")
 
 
 class Log:
