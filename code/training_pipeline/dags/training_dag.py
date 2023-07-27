@@ -54,12 +54,19 @@ with DAG(
         command="/bin/bash -c 'cd src/ && python model_evaluation.py'"
     )
     
+    model_validation_task = DockerOperator(
+        task_id="model_validation_task",
+        **DefaultConfig.DEFAULT_DOCKER_OPERATORS_ARGS,
+        command="/bin/bash -c 'cd src/ && python model_validation.py'"
+    )
+    
     (
         feature_store_init_task >>
         data_extraction_task >>
         data_validation_task >> 
         data_preparation_task >> 
         model_training_task >> 
-        model_evaluation_task
+        model_evaluation_task >>
+        model_validation_task
     )
     
