@@ -13,6 +13,7 @@ load_dotenv()
 class AppConst:
     LOG_LEVEL = logging.DEBUG
     DATA_EXTRACTION = "data_extraction"
+    BATCH_PREDICTION = "batch_prediction"
     
 
 class AppPath:
@@ -56,6 +57,7 @@ class Config:
         
         self.mlflow_tracking_uri = os.getenv("MLFLOW_TRACKING_URI")
         self.batch_input_file = Path(AppPath.MODEL_SERVING_DIR, os.getenv("BATCH_INPUT_FILE"))
+        self.registered_model_file = Path(AppPath.MODEL_SERVING_DIR, os.getenv("REGISTERED_MODEL_FILE"))
         
     
 class Log:
@@ -109,3 +111,14 @@ def read_parquet(path) -> pd.DataFrame:
 def to_parquet(df: pd.DataFrame, path):
     Log().log.info(f"Started: to_parquet {path}")
     df.to_parquet(path, engine="fastparquet")
+    
+
+def dump_json(dict_obj: dict, path):
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(dict_obj, f)
+
+
+def load_json(path) -> dict:
+    with open(path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    return data
