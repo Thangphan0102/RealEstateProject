@@ -1,0 +1,8 @@
+artifacts/
+data/
+.conda/
+dags/
+__pycache__/
+.dockerignore
+.gitignore
+dev_requirements.txt
