@@ -176,7 +176,7 @@ if __name__ == "__main__":
             space=search_space,
             algo=tpe.suggest,
             trials=trials,
-            max_evals=1,
+            max_evals=50,
             rstate=np.random.default_rng(config.random_seed)
         )
 
