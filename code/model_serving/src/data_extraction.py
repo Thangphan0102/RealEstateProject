@@ -1,4 +1,5 @@
 from feast import FeatureStore
+import pandas as pd
 
 from utils import *
 
@@ -9,6 +10,8 @@ AppPath()
 def main():
     # Start
     logger.info("Started: Extracting data...")
+    config = Config()
+    logger.info(f"Loaded config: {config.__dict__}")
     
     # Inspect data source directory
     inspect_dir(AppPath.DATA_SOURCE_DIR)
@@ -17,10 +20,12 @@ def main():
     fs = FeatureStore(repo_path=AppPath.FEATURE_STORE_REPO)
     
     # Read entity data
-    entity_df = read_parquet(AppPath.ENTITY_PQ)
+    inspect_dir(config.batch_input_file)
+    entity_df = pd.read_csv(config.batch_input_file, parse_dates=['date_posted'], dtype={'property_id': object})
     
     # Retrieve feature data
-    training_df = fs.get_historical_features(
+    logger.info("Fetching feature..")
+    batch_input_df = fs.get_historical_features(
         entity_df=entity_df,
         features=[
             "properties_fv:area",
@@ -34,18 +39,18 @@ def main():
         ]
     ).to_df()
     
-    # Drop unecessary columns for training
-    training_df = training_df.drop(["date_posted", "property_id"], axis=1)
+    # Drop unecessary columns
+    batch_input_df = batch_input_df.drop(columns=["date_posted", "property_id"])
     
     # Log
     logger.info(f"---- Feature schema ----")
-    logger.info(training_df.info())
+    logger.info(batch_input_df.info())
     
-    logger.info(f"---- Example features ----\n{training_df.head()}")
+    logger.info(f"---- Example features ----\n{batch_input_df.head()}")
     
     # Store as file
-    to_parquet(training_df, AppPath.TRAINING_PQ)
-    inspect_dir(AppPath.TRAINING_PQ.parent)
+    to_parquet(batch_input_df, AppPath.BATCH_INPUT_PQ)
+    inspect_dir(AppPath.BATCH_INPUT_PQ)
     
     # End
     logger.info("Finished: Extracting data")

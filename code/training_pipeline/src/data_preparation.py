@@ -2,12 +2,12 @@ from sklearn.model_selection import train_test_split
 
 from utils import *
 
+logger = Log(AppConst.DATA_PREPARATION).log
 AppPath()
 
 
 def main():
     # Start
-    logger = Log(AppConst.DATA_PREPARATION).log
     logger.info("Started: Preparing data...")
     
     # Load config
