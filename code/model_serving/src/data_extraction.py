@@ -49,8 +49,8 @@ def main():
     logger.info(f"---- Example features ----\n{batch_input_df.head()}")
     
     # Store as file
-    to_parquet(batch_input_df, AppPath.BATCH_OUTPUT_PQ)
-    inspect_dir(AppPath.BATCH_OUTPUT_PQ)
+    to_parquet(batch_input_df, AppPath.BATCH_INPUT_PQ)
+    inspect_dir(AppPath.BATCH_INPUT_PQ)
     
     # End
     logger.info("Finished: Extracting data")
