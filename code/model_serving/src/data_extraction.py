@@ -40,7 +40,8 @@ def main():
     ).to_df()
     
     # Drop unecessary columns
-    batch_input_df = batch_input_df.drop(columns=["date_posted", "property_id"])
+    batch_input_df = batch_input_df.drop(columns=["date_posted"])
+    batch_input_df = batch_input_df.set_index('property_id')
     
     # Log
     logger.info(f"---- Feature schema ----")
