@@ -59,20 +59,20 @@ class Config:
             "length": np.float64,
             "num_bedrooms": np.float64,
             "num_bathrooms": np.float64,
-            "district": object,
-            "city": object,
+            # "district": object,
+            # "city": object,
             "price": np.float64,
-            "legal_document": pd.CategoricalDtype(
-                categories=[
-                    'Giấy tờ hợp lệ',
-                    'Sổ hồng',
-                    'Sổ đỏ',
-                    'Hợp đồng mua bán',
-                    'Không xác định',
-                    'Giấy tờ viết tay'
-                ],
-                ordered=False
-            )
+            # "legal_document": pd.CategoricalDtype(
+            #     categories=[
+            #         'Giấy tờ hợp lệ',
+            #         'Sổ hồng',
+            #         'Sổ đỏ',
+            #         'Hợp đồng mua bán',
+            #         'Không xác định',
+            #         'Giấy tờ viết tay'
+            #     ],
+            #     ordered=False
+            # )
         }
 
         self.random_seed = 12
