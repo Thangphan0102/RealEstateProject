@@ -28,9 +28,9 @@ def main():
             "properties_fv:length",
             "properties_fv:num_bedrooms",
             "properties_fv:num_bathrooms",
-            "properties_fv:district",
-            "properties_fv:city",
-            "properties_fv:legal_document"
+            # "properties_fv:district",
+            # "properties_fv:city",
+            # "properties_fv:legal_document"
         ]
     ).to_df()
     

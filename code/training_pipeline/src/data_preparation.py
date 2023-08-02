@@ -17,7 +17,7 @@ def main():
     # Read data
     df = read_parquet(AppPath.TRAINING_PQ)
     X = df.drop([config.target_col], axis=1)
-    X = pd.get_dummies(X, prefix=['district', 'city', 'legal_document'])
+    # X = pd.get_dummies(X, prefix=['district', 'city', 'legal_document'])
     y = df.loc[:, [config.target_col]]
     
     # Train test split
