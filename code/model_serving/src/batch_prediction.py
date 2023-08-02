@@ -28,7 +28,6 @@ def main():
     
     # Load data
     batch_df = read_parquet(AppPath.BATCH_INPUT_PQ)
-    batch_df = pd.get_dummies(batch_df, prefix=['district', 'city', 'legal_document'])
     
     # Restructure features
     model_signature = mlflow_model.metadata.signature
