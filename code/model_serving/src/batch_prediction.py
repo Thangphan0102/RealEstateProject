@@ -49,17 +49,11 @@ def main():
     batch_df["pred"] = preds
 
     logger.info("---- Example output ----")
-    logger.info(batch_df.head())
+    logger.info(f"\n{batch_df.head()}")
     
     # Write predictions to file
     to_parquet(batch_df, AppPath.BATCH_OUTPUT_PQ)
     inspect_dir(AppPath.BATCH_OUTPUT_PQ)
-    
-    # Result
-    result_df = read_parquet(AppPath.BATCH_OUTPUT_PQ)
-    
-    logger.info("---- Prediction ----")
-    logger.info(result_df['pred'])
     
     # End 
     logger.info("Finished: Batch prediction")
