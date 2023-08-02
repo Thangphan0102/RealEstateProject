@@ -20,6 +20,7 @@ usage() {
     echo " push               push image"
     echo " build_push         build and push image"
     echo " dags               deploy airflow dags"
+    echo " model              deploy registered model"
 }
 
 if [[ -z "$cmd" ]]; then
@@ -49,6 +50,20 @@ deploy_dags() {
     cp dags/* "$DAGS_DIR"
 }
 
+deploy_model() {
+    MODEL_TRAIN_FILE="/Users/thangphan/RealEstate/code/training_pipeline/artifacts/registered_model_version.json"
+
+    if [[ -f "$MODEL_TRAIN_FILE" ]]; then
+        MODEL_SERVING_FILE="/Users/thangphan/RealEstate/code/model_serving/artifacts/registered_model_version.json"
+        cp $MODEL_TRAIN_FILE $MODEL_SERVING_FILE
+        if [[ -f "$MODEL_SERVING_FILE" ]]; then
+            echo "Successfully deployed model"
+        fi
+    else
+        echo "$MODEL_TRAIN_FILE not exist."
+    fi
+}
+
 shift 
 
 case "$cmd" in
@@ -64,6 +79,9 @@ case "$cmd" in
         ;;
     dags)
         deploy_dags "$@"
+        ;;
+    model)
+        deploy_model "$@"
         ;;
     *)
         echo -n "Unknown command: $cmd"
