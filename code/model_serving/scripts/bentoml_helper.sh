@@ -17,9 +17,12 @@ if [[ -z "$cmd" ]]; then
     exit 1
 fi
 
-serve() {
+save_model() {
     cd src
     python bentoml_save_model.py
+}
+
+serve() {
     bentoml serve bentoml_service:svc "$@"
 }
 
@@ -27,6 +30,7 @@ shift
 
 case $cmd in
     serve)
+        save_model
         serve "$@"
         ;;
     *)
