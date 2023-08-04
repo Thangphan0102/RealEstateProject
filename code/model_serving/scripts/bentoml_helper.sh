@@ -19,7 +19,8 @@ fi
 
 serve() {
     cd src
-    bentoml serve bentoml_service:svc --port=8172 "$@"
+    python bentoml_save_model.py
+    bentoml serve bentoml_service:svc "$@"
 }
 
 shift
