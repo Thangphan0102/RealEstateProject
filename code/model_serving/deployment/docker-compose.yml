@@ -1,0 +1,12 @@
+version: "3.7"
+services:
+  bentoml_service:
+    image: $DOCKER_USER/$PROJECT/$IMAGE_NAME:latest
+    container_name: online_serving
+    restart: on-failure
+    volumes:
+      - ../artifacts:/real_estate/code/model_serving/artifacts
+      - ../../../feature_repo:/real_estate/feature_repo
+    command: /bin/bash scripts/bentoml_helper.sh serve --port=$ONLINE_SERVING_PORT
+    ports:
+      - $ONLINE_SERVING_PORT:$ONLINE_SERVING_PORT

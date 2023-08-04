@@ -4,8 +4,8 @@ cmd=$1
 
 # Constants
 DOCKER_USER="$DOCKER_USER"
-PROJECT="real_estate"
-IMAGE_NAME="model_serving"
+PROJECT="$PROJECT"
+IMAGE_NAME="$IMAGE_NAME"
 IMAGE_TAG=$(git describe --always)
 
 if [[ -z "$DOCKER_USER" ]]; then
@@ -21,6 +21,8 @@ usage() {
     echo " build_push         build and push image"
     echo " dags               deploy airflow dags"
     echo " model              deploy registered model"
+    echo " compose_up         up docker compose"
+    echo " compose_down       down docker compose"
 }
 
 if [[ -z "$cmd" ]]; then
@@ -64,6 +66,14 @@ deploy_model() {
     fi
 }
 
+compose_up() {
+    docker-compose --env-file ./deployment/.env -f ./deployment/docker-compose.yml up -d
+}
+
+compose_down() {
+    docker-compose --env-file ./deployment/.env -f ./deployment/docker-compose.yml down
+}
+
 shift 
 
 case "$cmd" in
@@ -82,6 +92,12 @@ case "$cmd" in
         ;;
     model)
         deploy_model "$@"
+        ;;
+    compose_up)
+        compose_up "$@"
+        ;;
+    compose_down)
+        compose_down "$@"
         ;;
     *)
         echo -n "Unknown command: $cmd"

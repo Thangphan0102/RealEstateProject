@@ -14,6 +14,7 @@ class AppConst:
     LOG_LEVEL = logging.DEBUG
     DATA_EXTRACTION = "data_extraction"
     BATCH_PREDICTION = "batch_prediction"
+    BENTOML_SERVICE = "bentoml_service"
     
 
 class AppPath:

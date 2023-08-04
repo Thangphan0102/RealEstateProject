@@ -13,3 +13,10 @@ deploy_dags:
 
 deploy_registered_model:
 	source ${ENV_FILE} && bash deployment/deploy.sh model
+
+compose_up:
+	source ${ENV_FILE} && bash deployment/deploy.sh compose_up
+
+compose_down:
+	source ${ENV_FILE} && bash deployment/deploy.sh compose_down
+	

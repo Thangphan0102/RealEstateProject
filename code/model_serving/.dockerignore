@@ -3,6 +3,7 @@ data/
 .conda/
 dags/
 __pycache__/
+.DS_Store
 .dockerignore
 .gitignore
 dev_requirements.txt
