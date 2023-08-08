@@ -20,8 +20,8 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Add urls redis for crawling")
-    parser.add_argument("type", type=str, help="property type want to crawl")
-    parser.add_argument("first", type=int, help="first page want to crawl")
-    parser.add_argument("last", type=int, help="last page want to crawl")
+    parser.add_argument("property_type", type=str, help="property type want to crawl")
+    parser.add_argument("first_page", type=int, help="first page want to crawl")
+    parser.add_argument("last_page", type=int, help="last page want to crawl")
     args = parser.parse_args()
     main(args)
