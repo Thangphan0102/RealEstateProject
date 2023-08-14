@@ -7,3 +7,6 @@ build_image:
 
 build_push_image:
 	source ${ENV_FILE} && bash deployment/deploy.sh build_push
+
+deploy_dags:
+	source ${ENV_FILE} && bash deployment/deploy.sh dags
