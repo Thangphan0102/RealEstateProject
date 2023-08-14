@@ -1,0 +1,7 @@
+.dockerignore
+.gitignore
+data/
+artifacts/
+.conda
+dev_requirements.txt
+Makefile
