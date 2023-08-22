@@ -11,7 +11,6 @@ pipeline {
 
             steps {
                 echo 'Building data pipeline'
-                sh 'chmod +x -R ${env.WORKSPACE}'
                 sh 'cd code/data_pipeline && make build_image'
             }
         }
@@ -29,7 +28,6 @@ pipeline {
 
             steps {
                 echo 'Deploying data pipeline'
-                sh 'chmod +x -R ${env.WORKSPACE}'
                 sh 'cd code/data_pipeline && make deploy_dags'
             }
         }
