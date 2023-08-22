@@ -1,34 +1,12 @@
 pipeline {
     agent {
-        docker {
-            image 'python:3.9'
-        }
+        docker { image 'node:16-alpine' }
     }
 
     stages {
-        stage('build data pipeline') {
-            when {changeset "code/data_pipeline/**"}
-
+        stage('Test') {
             steps {
-                echo 'Building data pipeline'
-                sh 'cd code/data_pipeline && make build_image'
-            }
-        }
-
-        stage('test data pipeline') {
-            when {changeset "code/data_pipeline/**"}
-
-            steps {
-                echo 'Testing data pipeline'
-            }
-        }
-
-        stage('deploy data pipeline') {
-            when {changeset "code/data_pipeline/**"}
-
-            steps {
-                echo 'Deploying data pipeline'
-                sh 'cd code/data_pipeline && make deploy_dags'
+                sh 'node --version'
             }
         }
     }
