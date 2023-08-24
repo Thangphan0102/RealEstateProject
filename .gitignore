@@ -5,7 +5,6 @@ run_env/
 
 # Environment
 .conda
-.env
 
 # Data
 data_sources/
