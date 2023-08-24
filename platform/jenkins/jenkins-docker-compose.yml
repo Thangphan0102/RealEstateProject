@@ -1,0 +1,31 @@
+version: '3'
+
+networks:
+  jenkins_network:
+    driver: bridge
+
+services:
+  docker:
+    container_name: docker
+    image: docker:dind
+    volumes:
+      - /run_env/jenkins_home:/var/jenkins_home
+    ports:
+      - 2376:2376
+    privileged: true
+    networks:
+      - jenkins_network
+  jenkins:
+    container_name: jenkins
+    user: root
+    build:
+      context: jenkins/
+    networks:
+      - jenkins_network
+    ports:
+      - 8080:8080
+      - 50000:50000
+    volumes:
+      - /run_env/jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: on-failure

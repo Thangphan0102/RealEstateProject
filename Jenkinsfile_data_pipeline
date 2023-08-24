@@ -1,0 +1,41 @@
+pipeline {
+    agent {
+        docker {
+            image 'python:3.9'
+        }
+    }
+
+    stages {
+        stage('Build') {
+            when {
+                changeset "code/data_pipeline/**"
+            }
+
+            steps {
+                echo 'Building data pipeline...'
+                sh 'cd code/data_pipeline && make build_image'
+            }
+        }
+
+        stage('Test') {
+            when {
+                changeset "code/data_pipeline/**"
+            }
+
+            steps {
+                echo 'Testing data pipeline...'
+            }
+        }
+
+        stage('Deploy') {
+            when {
+                changeset "code/data_pipeline/**"
+            }
+
+            steps {
+                echo 'Deploying data pipeline...'
+                sh 'cd code/data_pipeline && make deploy_dags'
+            }
+        }
+    }
+}
