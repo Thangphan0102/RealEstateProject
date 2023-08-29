@@ -1,7 +1,6 @@
 __pycache__/
 .idea/
 .DS_Store
-run_env/
 
 # Environment
 .conda
