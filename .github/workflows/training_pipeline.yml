@@ -1,0 +1,35 @@
+name: Training Pipeline
+
+on:
+    push:
+        branches: [ main ]
+        paths:
+            - "code/training_pipeline/**"
+    pull_request:
+        branches: [ main ]
+        paths:
+            - "code/training_pipeline/**"
+
+jobs:
+    training_pipeline:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check out the repo
+              uses: actions/checkout@v2
+
+            - name: Build image
+              working-directory: "./code/training_pipeline"
+              run: |
+                echo "Building training pipeline.."
+                make build_image
+            
+            - name: Test training pipeline
+              working-directory: "./code/training_pipeline"
+              run: |
+                echo "Testing training pipeline.."
+
+            - name: Deploy training pipeline
+              working-directory: "./code/training_pipeline"
+              run: |
+                echo "Deploying training pipeline.."
+                make deploy_dags

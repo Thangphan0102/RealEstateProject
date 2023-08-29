@@ -1,0 +1,42 @@
+name: Model serving
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "code/model_serving/**"
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "code/model_serving/**"
+
+jobs:
+  model_serving:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
+      - name: Build image
+        working-directory: "./code/model_serving"
+        run: |
+          echo "Building model serving"
+          make build_image
+
+      - name: Test model serving
+        working-directory: "./code/model_serving"
+        run: |
+          echo "Testing model serving"
+      
+      - name: Deploy batch model serving
+        working-directory: "./code/model_serving"
+        run: |
+          echo "Deploying model serving"
+          make deploy_dags
+
+      - name: Deploy online model serving
+        working-directory: "./code/model_serving"
+        run: |
+          echo "Deploying online model serving"
+          make deploy_registered_model
+          make compose_up
