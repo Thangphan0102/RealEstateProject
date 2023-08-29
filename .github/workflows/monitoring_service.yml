@@ -4,11 +4,11 @@ on:
     push:
         branches: [ main ]
         paths:
-            - ".code/monitoring_service/**"
+            - "code/monitoring_service/**"
     pull_request:
         branches: [ main ]
         paths:
-            - ".code/monitoring_service/**"
+            - "code/monitoring_service/**"
 
 jobs:
     monitoring_service:
