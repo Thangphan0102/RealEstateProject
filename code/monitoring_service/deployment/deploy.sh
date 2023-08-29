@@ -29,13 +29,13 @@ if [[ -z "$cmd" ]]; then
 fi
 
 build() {
-    docker build --tag $DOCKER_USER/$PROJECT/$IMAGE_NAME:$IMAGE_TAG -f deployment/Dockerfile .
-    docker tag $DOCKER_USER/$PROJECT/$IMAGE_NAME:$IMAGE_TAG $DOCKER_USER/$PROJECT/$IMAGE_NAME:latest
+    docker build --tag "$DOCKER_USER"/"$PROJECT"_"$IMAGE_NAME":"$IMAGE_TAG" -f deployment/Dockerfile .
+    docker tag "$DOCKER_USER"/"$PROJECT"_"$IMAGE_NAME":"$IMAGE_TAG" "$DOCKER_USER"/"$PROJECT"_"$IMAGE_NAME":latest
 }
 
 push() {
-    docker push $DOCKER_USER/$PROJECT/$IMAGE_NAME:$IMAGE_TAG
-    docker push $DOCKER_USER/$PROJECT/$IMAGE_NAME:latest
+    docker push "$DOCKER_USER"/"$PROJECT"_"$IMAGE_NAME":"$IMAGE_TAG"
+    docker push "$DOCKER_USER"/"$PROJECT"_"$IMAGE_NAME":latest
 }
 
 deploy_dags() {
