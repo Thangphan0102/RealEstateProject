@@ -2,9 +2,9 @@ name: Data Pipeline
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ ci/cd ]
   pull_request:
-    branches: [ develop ]
+    branches: [ ci/cd ]
 
 jobs:
   test:
@@ -12,6 +12,19 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Test
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      
+      - name: Install dependencies
+        working-directory: "./code/data_pipeline"
         run: |
-          echo "Test"
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Build
+        working-directory: "./code/data_pipeline"
+        run: |
+          echo "Building data pipeline"
+          make build_image
