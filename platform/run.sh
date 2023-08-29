@@ -9,7 +9,6 @@ MLFLOW="mlflow"
 AIRFLOW="airflow"
 ELK="elk"
 PROM_GRAF="prom-graf"
-JENKINS="jenkins"
 RESTART_SLEEP_SEC=2
 
 usage() {
@@ -21,7 +20,6 @@ usage() {
     echo "  $AIRFLOW"
     echo "  $ELK"
     echo "  $PROM_GRAF"
-    echo "  $JENKINS"
     echo "Available commands:"
     echo "  up           run container"
     echo "  down         stop and remove container"
@@ -95,22 +93,12 @@ down_prom_graf() {
     down "$PROM_GRAF" "$@"
 }
 
-# JENKINS
-up_jenkins() {
-    up "$JENKINS" "$@"
-}
-
-down_jenkins() {
-    down "$JENKINS" "$@"
-}
-
 # ALL
 up_all() {
     up_elk "$@"
     up_airflow "$@"
     up_mlflow "$@"
     up_prom_graf "$@"
-    up_jenkins "$@"
 }
 
 down_all() {
@@ -118,7 +106,6 @@ down_all() {
     down_airflow "$@"
     down_mlflow "$@"
     down_prom_graf "$@"
-    down_jenkins "$@"
 }
 
 if [[ "$1" == "-h" ]]; then
@@ -156,9 +143,6 @@ case $cmd in
             "$PROM_GRAF")
                 up_prom_graf "$@"
                 ;;
-            "$JENKINS")
-                up_jenkins "$@"
-                ;;
             *)
                 echo "Unknown service"
                 usage
@@ -182,9 +166,6 @@ case $cmd in
                 ;;
             "$PROM_GRAF")
                 down_prom_graf "$@"
-                ;;
-            "$JENKINS")
-                down_jenkins "$@"
                 ;;
             *)
                 echo "Unknown service"
@@ -219,11 +200,6 @@ case $cmd in
                 down_prom_graf "$@"
                 sleep $RESTART_SLEEP_SEC
                 up_prom_graf "$@"
-                ;;
-            "$JENKINS")
-                down_jenkins "$@"
-                sleep $RESTART_SLEEP_SEC
-                up_jenkins "$@"
                 ;;
             *)
                 echo "Unknown service"
